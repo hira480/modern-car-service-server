@@ -18,6 +18,7 @@ async function run() {
     try {
         await client.connect();
         const serviceCollection = client.db('modernCar').collection('service');
+        const orderCollection = client.db('modernCar').collection('order');
 
         app.get('/service', async (req, res) => {
             const query = {};
@@ -47,6 +48,22 @@ async function run() {
             const result = await serviceCollection.deleteOne(query);
             res.send(result);
         });
+
+        // order collection api
+
+        app.get('/order', async (req, res) => {
+            const email = req.query.email;
+            const query = { email: email };
+            const cursor = orderCollection.find(query);
+            const order = await cursor.toArray();
+            res.send(order);
+        });
+
+        app.post('/order', async (req, res) => {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
+            res.send(result);
+        })
 
     }
     finally {
