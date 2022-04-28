@@ -111,6 +111,10 @@ app.get('/', (req, res) => {
     res.send('Running Car Server');
 });
 
+app.get('/hero', (req, res) => {
+    res.send('Hira ia now using Heroku');
+})
+
 app.listen(port, () => {
     console.log('Listening to port', port);
 })
